@@ -1,12 +1,50 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">You Are: {{name}}</span>
+    </div>
+    
+    <form class="container-fluid justify-content-start">
+      <button class="btn custom-black-button me-2" type="button" id = PageButton>Page</button>
+      <button class="btn custom-black-button me-2" type="button" id = logoutButton>Logout</button>
+    </form>
+    
+</nav>
+<nav class="navbar bg-body-tertiary">
+    
+</nav>
+
+<style>
+    .custom-black-button {
+        background-color: black;
+        color: white; /* Warna teks */
+        /* Anda dapat menyesuaikan properti lain sesuai kebutuhan */
+    }
+    </style>
+
 <h1>Shopping List Page</h1>
 
-<h5>Name: </h5>
-<p>{{ name }}<p>
-<h5>Class: </h5>
-<p>{{ class }}<p>
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Name : {{ name }}</span>
+    </div>
+</nav>
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Class :{{ class }}</span>
+    </div>
+</nav>
+
+<script>
+    document.getElementById("logoutButton").addEventListener("click", function() {
+        window.location.href = "{% url 'main:logout' %}";
+    });
+    document.getElementById("PageButton").addEventListener("click", function() {
+        window.location.href = " https://www.youtube.com/watch?v=dQw4w9WgXcQ ";
+    });
+</script>
 
 <table>
     <tr>
@@ -14,6 +52,8 @@
         <th>Price</th>
         <th>Description</th>
         <th>Date Added</th>
+        <th>Edit Product</th>
+        <th>Delete Product</th>
     </tr>
 
     {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
@@ -24,11 +64,39 @@
             <td>{{product.price}}</td>
             <td>{{product.description}}</td>
             <td>{{product.date_added}}</td>
+            <td>
+                <a href="{% url 'main:edit_product' product.pk %}">
+                    <button>
+                        Edit
+                    </button>
+                </a>
+            </td>
+            <td>
+            <a href="{% url 'main:delete_product' product.pk %}">
+                    <button>
+                        Delete
+                    </button>
+            </a>
+            </td>
+
         </tr>
     {% endfor %}
 </table>
 
 <br />
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
+</style>
 
 <a href="{% url 'main:create_product' %}">
     <button>
@@ -36,14 +104,23 @@
     </button>
 </a>
 
+<!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'main:logout' %}">Logout</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+</nav> -->
+
 <br>
 <br>
 
-<a href="{% url 'main:logout' %}">
+<!-- <a href="{% url 'main:logout' %}">
     <button>
         Logout
     </button>
-</a>
+</a> -->
 
 <h5>Sesi terakhir login: {{ last_login }}</h5>
 {% endblock content %}
