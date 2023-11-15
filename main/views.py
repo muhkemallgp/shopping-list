@@ -14,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 import datetime
 
+
 #for flutter
 @csrf_exempt
 def create_product_flutter(request):

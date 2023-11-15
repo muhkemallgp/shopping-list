@@ -31,6 +31,7 @@ def login(request):
             "message": "Login gagal, periksa kembali email atau kata sandi."
         }, status=401)
     
+    
 #logout flutter
 @csrf_exempt
 def logout(request):
