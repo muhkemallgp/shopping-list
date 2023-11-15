@@ -1,4 +1,5 @@
-from django.http import HttpResponseRedirect, HttpResponseNotFound
+import json
+from django.http import HttpResponseRedirect, HttpResponseNotFound, JsonResponse
 from django.http import HttpResponse
 from django.core import serializers
 from main.forms import ProductForm
@@ -13,7 +14,26 @@ from django.views.decorators.csrf import csrf_exempt
 
 import datetime
 
+#for flutter
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
 
+        new_product = Product.objects.create(
+            user = request.user,
+            name = data["name"],
+            price = int(data["price"]),
+            description = data["description"]
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+    
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
