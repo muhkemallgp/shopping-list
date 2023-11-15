@@ -75,6 +75,7 @@ def add_product_ajax(request):
 
     return HttpResponseNotFound()
 
+
 def register (request):
     form = UserCreationForm()
 
